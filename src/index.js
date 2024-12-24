@@ -1,23 +1,27 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('node:path');
+const mysql = require('mysql2');
+const runQuery = require('./utils/dbQuery');
+require('./utils/categoriesApi');
 
 
-const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+
+let mainWindow;
+
+app.on('ready', () => {
+  mainWindow = new BrowserWindow({
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.js'), 
+      contextIsolation: true, // Ensure context isolation
+      nodeIntegration: false, // Disable Node.js integration
     },
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-};
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -45,3 +49,13 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+// Example usage of the query function
+runQuery('SELECT * FROM categories', (err, results) => {
+  if (err) {
+    console.error('Error fetching data:', err.message);
+    return;
+  }
+  console.log('Query results:', results);
+});
