@@ -50,12 +50,3 @@ app.on('window-all-closed', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-
-// Example usage of the query function
-runQuery('SELECT * FROM categories', (err, results) => {
-  if (err) {
-    console.error('Error fetching data:', err.message);
-    return;
-  }
-  console.log('Query results:', results);
-});

@@ -21,7 +21,39 @@ async function fetchCategories() {
       console.error('Error fetching categories:', error);
     }
   }
+
+// Fetch categories when the page loads
+document.addEventListener('DOMContentLoaded', fetchCategories);
+
+
+// Listen for the form submission
+document.getElementById('addCategoryForm').addEventListener('submit', async (e) => {
+e.preventDefault(); // Prevent default form submission
+
+const name = document.getElementById('categoryName').value;
+const description = document.getElementById('categoryDescription').value;
+
+try {
+    // Send the new category data to the main process
+    const response = await window.electronAPI.addCategory({ name, description });
+
+    if (response.success) {
+    // Close the modal
+    const modalElement = document.getElementById('addCategoryModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+
+    // Clear the form inputs
+    document.getElementById('addCategoryForm').reset();
+
+    // Refresh the categories table
+    fetchCategories();
+    } else {
+    console.error('Error adding category:', response.error);
+    }
+} catch (error) {
+    console.error('Error:', error);
+}
+});
   
-  // Fetch categories when the page loads
-  document.addEventListener('DOMContentLoaded', fetchCategories);
   

@@ -10,3 +10,6 @@ const connection = mysql.createConnection({
 
 // Export the connection object
 module.exports = connection;
+
+
+

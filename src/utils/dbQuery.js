@@ -10,15 +10,17 @@ connection.connect((err) => {
 });
 
 // Export a function to perform queries
-const runQuery = (query, callback) => {
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.error('Query error:', err.stack);
-      callback(err, null);
-      return;
-    }
-    callback(null, results);
-  });
-};
+const runQuery = (query, params, callback) => {
+    // Ensure parameters are passed when necessary (for parameterized queries)
+    connection.query(query, params, (err, results) => {
+      if (err) {
+        console.error('Query error:', err.stack);
+        callback(err, null); // Error in the first argument, results in the second
+        return;
+      }
+      callback(null, results); // Success, pass the results
+    });
+  };
 
 module.exports = runQuery;
+

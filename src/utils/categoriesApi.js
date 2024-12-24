@@ -15,3 +15,21 @@ ipcMain.handle('get-categories', async () => {
     });
   });
 });
+
+
+ipcMain.handle('add-category', async (event, category) => {
+    return new Promise((resolve, reject) => {
+      const query = 'INSERT INTO categories (name, description) VALUES (?, ?)';
+      const values = [category.name, category.description];
+  
+      runQuery(query, values, (err, results) => {
+        if (err) {
+          console.error('Error adding category:', err.message);
+          reject({ success: false, error: err.message });
+          return;
+        }
+        resolve({ success: true, results });
+      });
+    });
+  });
+  
