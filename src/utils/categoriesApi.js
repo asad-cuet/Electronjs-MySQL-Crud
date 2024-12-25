@@ -56,3 +56,22 @@ ipcMain.handle('add-category', async (event, category) => {
       return { success: false, error: error.message };
     }
   });
+
+  ipcMain.handle('get-category', async (event, id) => {
+    try {
+      const query = 'SELECT * FROM categories WHERE id = ?';
+      return new Promise((resolve, reject) => {
+        runQuery(query, [id], (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+
+    } catch (error) {
+      console.error('Error in fetching:', error);
+      return { success: false, error: error.message };
+    }
+  });

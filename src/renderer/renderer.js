@@ -15,6 +15,7 @@ async function fetchCategories() {
           <td>${category.name}</td>
           <td>${category.description}</td>
           <td>
+            <button class="btn btn-primary btn-sm show-details" onclick="ShowCategory(${category.id})">Show</button>
             <button class="btn btn-danger btn-sm delete-btn" onclick="deleteCategory(${category.id});">Delete</button>
           </td>
         `;
@@ -85,4 +86,9 @@ async function deleteCategory(categoryId) {
       alert('An error occurred.');
     }
   }
+}
+
+function ShowCategory(id)
+{
+  window.location.href = `details.html?id=${id}`;
 }
