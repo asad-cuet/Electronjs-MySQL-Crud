@@ -14,6 +14,9 @@ async function fetchCategories() {
           <td>${category.id}</td>
           <td>${category.name}</td>
           <td>${category.description}</td>
+          <td>
+            <button class="btn btn-danger btn-sm delete-btn" data-id="${category.id}">Delete</button>
+          </td>
         `;
         tableBody.appendChild(row);
       });
@@ -21,6 +24,8 @@ async function fetchCategories() {
       console.error('Error fetching categories:', error);
     }
   }
+
+
 
 // Fetch categories when the page loads
 document.addEventListener('DOMContentLoaded', fetchCategories);
@@ -56,4 +61,10 @@ try {
 }
 });
   
+
+function refreshCategories()
+{
+  fetchCategories();
+  alert('Refreshed');
+}
   

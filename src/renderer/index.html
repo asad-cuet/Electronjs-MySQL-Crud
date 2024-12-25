@@ -8,9 +8,15 @@
 </head>
 <body>
   <div class="container mt-5">
-    <h1 class="text-center">Categories</h1>
+    
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add New</button>
+      <div>
+        <h1 class="text-center">Categories</h1>
+      </div>
+      <div>
+        <!-- <button class="btn btn-secondary me-2" id="refreshBtn" onclick="refreshCategories()">Refresh</button> -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add New</button>
+      </div>
     </div>
     <table class="table table-striped mt-4">
       <thead>
@@ -18,6 +24,7 @@
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody id="categories-table-body">
