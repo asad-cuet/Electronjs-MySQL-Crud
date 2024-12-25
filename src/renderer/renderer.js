@@ -15,7 +15,7 @@ async function fetchCategories() {
           <td>${category.name}</td>
           <td>${category.description}</td>
           <td>
-            <button class="btn btn-danger btn-sm delete-btn" data-id="${category.id}">Delete</button>
+            <button class="btn btn-danger btn-sm delete-btn" onclick="deleteCategory(${category.id});">Delete</button>
           </td>
         `;
         tableBody.appendChild(row);
@@ -68,3 +68,21 @@ function refreshCategories()
   alert('Refreshed');
 }
   
+
+
+async function deleteCategory(categoryId) {
+  if (confirm('Are you sure you want to delete this category?')) {
+    try {
+      const response = await window.electronAPI.deleteCategory(categoryId);
+      if (response.success) {
+        alert('Category deleted successfully!');
+        fetchCategories(); // Refresh table
+      } else {
+        alert('Failed to delete category.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred.');
+    }
+  }
+}

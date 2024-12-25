@@ -32,4 +32,27 @@ ipcMain.handle('add-category', async (event, category) => {
       });
     });
   });
+
+
+
+  ipcMain.handle('delete-category', async (event, id) => {
+    try {
+      const query = 'DELETE FROM categories WHERE id = ?';
   
+      // Use a Promise wrapper to handle the callback-based `runQuery`
+      const result = await new Promise((resolve, reject) => {
+        runQuery(query, [id], (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+  
+      return { success: true, result };
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      return { success: false, error: error.message };
+    }
+  });
